@@ -1,31 +1,50 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title> < Maricode > A codificação das Maricotas.</Maricode> i</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
-  </head>
-  
-  <body>
-    <div id="border">
-      <h1> Cifra de césar </h1>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="style.css">
+  <title></title>
+</head>
+<body>
+  <div id="border">
+    <h1>Decodificador de Mensagens</h1>
+  </div>
+
+  <div class="contanie">
+
+    <label for="mensagem1">Escreva alguma mensagem:</label> <br>
+    <textarea cols="25" rows="5" name="cdg1" id="cdg1"></textarea> <br>
+
+    <label for="escolhaMetodo">Escolha o Método:</label><br> 
+    <select name="metados" id="metados">
+         <option value="base" id="b64">Base64</option>
+        <option value="cesar" id="cCesar">Cifra de César</option>
+    </select><br>
+
+    <div class="seletorCesar" style="display: none;"> 
+        <p>Escolha algum numero:</p>
+        <input type="number" name="posiçãoCesar" id="posiçãoCesar" min="1" max="26">
     </div>
-    
-  </div id="container">
-    
-    <h3> < Codificar > </h3>
-    <textarea id="userInput" rows="5" cols="33" placeholder="Digite a sua mensagem aqui! =D"></textarea> 
-    <p>Chave:</p> <input type="number" class="inputNumber" id="key">
-    <button class="button" onclick="getText()">Codificar</button>
 
-    <h3> < Decodificar > </h3>
-    <textarea id="userInputD" rows="5" cols="33" placeholder="Lqoqbm i aci umvaiomu iycq! =L"></textarea> 
-    <p>Chave:</p> <input type="number" class="inputNumber" id="keyD">
-    <button class="button" onclick="getText2()">Decodificar</button>
-     
-      <script src="cipher.js"></script>
-      <script src="tests.js"></script>
+    <div class="radioType">
+        <input type="radio" name="options" value="criptografar" id="criptografar">
+        <label for="criptografar" id="labelCriptografar">Criptografar</label>
 
-  </body>
-  </html>
+        <input type="radio" name="options" value="descriptografar" id="descriptografar">
+        <label for="descriptografar" id="labelDescriptografar">Descriptografar</label>
+    </div>
+
+    <div class="botaomsg"> <br>
+        <input type="submit" id="submit" value="Criptografar" style="display: flex;">
+        <input type="submit" id="submit" value="Descriptografar" style="display: none;">
+    </div> <br>
+
+    <label for="resultado" id="resultado"> </label>
+    <textarea name="cdg2" id="cdg2" cols="25" rows="5"></textarea>
+  </div>
+    <script src="script.js"></script>
+
+</body>
+</html>
