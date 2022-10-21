@@ -1,72 +1,95 @@
-function mod(n, m) {
-  return ((n % m) + m) % m;
+var seletorCesar = document.querySelector('.seletorCesar')
+var metados = document.getElementById('metados')
+var cdg1 = document.getElementById('cdg1')
+var cdg2 = document.getElementById('cdg2')
+var seletor = document.querySelectorAll('.codigo')
+var incremento = document.getElementById('posiçãoCesar')
+var alfabeto = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz";
+var btncodificar = document.getElementById('criptografar');
+var btndecodificar = document.getElementById('descriptografar');
+var submit = document.getElementById('submit')
+
+metados.addEventListener('change', function() {
+    if(metados.value == 'cesar') {
+        seletorCesar.style.display = 'flex'
+    } else {
+        seletorCesar.style.display = 'none'
+    }
+})
+
+btncodificar.addEventListener('click', function(){
+        submit.style.display = 'block'
+        submit.value = 'Criptografar'
+})
+
+btndecodificar.addEventListener('click', function(){
+        submit.style.display = 'block'
+        submit.value = 'Descriptografar'
+})
+
+    function codBase64() {
+        var mensagem = document.querySelector('#cdg1').value
+        var codificado = btoa(mensagem)
+        return codificado
+}
+    function decBase64(){
+        var mensagem = document.querySelector('#cdg1').value
+        var decodificado = atob(mensagem)
+        return decodificado
 }
 
+    function codCesar() {
+        var elementoDaMensagem = cdg1.value;
+        var mensagemMinuscula = elementoDaMensagem.toLowerCase();
+        var transformarNumero = (Number(incremento.value) % 26);
+        var mensagemCodificada = '';
+      
+        for(var i = 0; i < mensagemMinuscula.length; i++){
+           for(var j =0; j < alfabeto.length; j++){
+             if(mensagemMinuscula[i] == alfabeto[j]){
+               mensagemCodificada += alfabeto [j + transformarNumero]
+               break;
+           } else if (mensagemMinuscula[i] == ' ') {
+               mensagemCodificada += ' ';
+               break;
+           }
+          }    
+      }
+      return mensagemCodificada
+      }
+      
+          function decCesar() {
+          var elementoDaMensagem = cdg1.value;
+          var mensagemMinuscula = elementoDaMensagem.toLowerCase()
+          var transformarNumero = (Number(incremento.value) % 26)
+          var mensagemCodificada = '';
+        
+          for(var i = 0; i < mensagemMinuscula.length; i++){
+             for(var j = alfabeto.length - 1; j >= 0; j--){
+               if(mensagemMinuscula[i] == alfabeto[j]){
+                 mensagemCodificada += alfabeto [j - transformarNumero]
+                 break;
+             } else if (mensagemMinuscula[i] == ' ') {
+                 mensagemCodificada += ' ';
+                 break;
+             }
+            }       
+        }
+        return mensagemCodificada
+      }
 
-function encode(offset, message) {
-  
-  let asciiCode = 0;
-  let finalString = "";
-  for (let i = 0; i < message.length; i++) {
-    if (message[i].charCodeAt() == 32) {
-      finalString += " ";
-    }
-    else if (message[i].charCodeAt() >= 65 && message[i].charCodeAt() <= 90) {
-      asciiCode = mod((message[i].charCodeAt() - 65 + offset), 26) + 65;
-      finalString += String.fromCharCode(asciiCode);
-    }
-    else if (message[i].charCodeAt() >= 97 && message[i].charCodeAt() <= 122) {
-      asciiCode = mod((message[i].charCodeAt() - 97 + offset), 26) + 97;
-      finalString += String.fromCharCode(asciiCode);
-    }
-    else {
-      finalString += message[i];
-    }
-    
-  }
-  return finalString;
-} 
+      submit.addEventListener('click', function(e){
+        e.preventDefault();
+        if(btncodificar.checked && metados.value === "base"){
+            cdg2.innerText = codBase64();
 
-function getText() {
-  const offset = parseInt(document.getElementById("key").value);
-  let message = document.getElementById("userInput");
-  const final = encode(offset, message.value);
-  message.value = final;
-  message.select();
-  message = document.execCommand("copy");
-}
+        } else if(btndecodificar.checked && metados.value === "base"){
+            cdg2.innerText = decBase64();
 
-function decode(offset, message) {
-  
-  let asciiCode = 0;
-  let finalString = "";
-  for (let i = 0; i < message.length; i++) {
-    if (message[i].charCodeAt() == 32) {
-      finalString += " ";
-    }
-    else if (message[i].charCodeAt() >= 65 && message[i].charCodeAt() <= 90) {
-      asciiCode = mod((message[i].charCodeAt() - 65 + (offset * -1 )), 26) + 65;
-      finalString += String.fromCharCode(asciiCode);
-    }
-    else if (message[i].charCodeAt() >= 97 && message[i].charCodeAt() <= 122) {
-      asciiCode = mod((message[i].charCodeAt() - 97 + (offset * -1 )), 26) + 97;
-      finalString += String.fromCharCode(asciiCode);
-    }
-    else {
-      finalString += message[i];
-    }
-  }
-  return finalString;
-}
-  
-  
+        } else if(btncodificar.checked && metados.value === "cesar"){
+            cdg2.innerText = codCesar()
 
-function getText2() {
-  const offset = parseInt(document.getElementById("keyD").value);
-  let message = document.getElementById("userInputD");
-  const final = decode(offset, message.value);
-
-  message.value = final;
-  message.select();
-  message = document.execCommand("copy");
-}
+        } else if(btndecodificar.checked && metados.value === "cesar"){
+            cdg2.innerText = decCesar()
+        }
+    }) 
